@@ -1,20 +1,10 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime
+from sqlalchemy import Column, Integer, String
 from database import Base
-from datetime import datetime
 
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    email = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)
-    daily_prompts_used = Column(Integer, default=0)
-    daily_token_usage = Column(Float, default=0.0)
-    last_prompt_reset = Column(DateTime, default=datetime.utcnow)
-    last_gradcam_used = Column(DateTime, default=None)
+class UserUsage(Base):
+    __tablename__ = "user_usage"
 
-class ForumPost(Base):
-    __tablename__ = "forum_posts"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer)
-    content = Column(String)
-    timestamp = Column(DateTime, default=datetime.utcnow)
+    user_id = Column(String, primary_key=True, index=True)
+    prompts_used = Column(Integer, default=0)
+    tokens_used = Column(Integer, default=0)
+    gradcam_used = Column(Integer, default=0)
